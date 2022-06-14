@@ -11,6 +11,14 @@ interface TextObject {
     y: number;
 }
 
+interface Page {
+    Texts: TextObject[];
+}
+
+interface PDFData {
+    Pages: Page[];
+}
+
 const main = async () => {
     const outputDir = path.join(__dirname, 'pages');
 
@@ -23,8 +31,8 @@ const main = async () => {
     const pdfFilename = path.join(__dirname, 'Survivor 1.0.pdf');
     const pdfParser = new PDF2json();
 
-    pdfParser.on('pdfParser_dataReady', (pdfData: any) => {
-        pdfData.Pages.forEach((page: any, pageIndex: number) => {
+    pdfParser.on('pdfParser_dataReady', (pdfData: PDFData) => {
+        pdfData.Pages.forEach((page: Page, pageIndex: number) => {
             const pageNumber = pageIndex + 1;
             const filename = `page${pageNumber}.txt`;
             console.log(`Page ${pageNumber}`);
