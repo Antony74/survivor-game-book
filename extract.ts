@@ -45,12 +45,17 @@ const main = async () => {
                 if (textIndex && textObject.y > prevY) {
                     text = '\n' + text;
                 }
-
+                
                 prevY = textObject.y;
                 return text;
             });
             texts[0] += '\n';
-            fs.writeFile(path.join(__dirname, 'pages', filename), texts.join(' '));
+
+            let pageText = texts.join(' ');
+            pageText = pageText.replaceAll('  ', ' ');
+            pageText = pageText.replaceAll(' !', '!');
+
+            fs.writeFile(path.join(__dirname, 'pages', filename), pageText);
         });
     });
 
