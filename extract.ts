@@ -1,5 +1,6 @@
 import fs from 'fs/promises';
 import path from 'path';
+import { createFSMGenerator } from './FSMGenerator';
 const PDF2json = require('pdf2json');
 
 interface RObject {
@@ -20,6 +21,8 @@ interface PDFData {
 }
 
 const main = async () => {
+    const fsmGenerator = createFSMGenerator();
+
     const outputDir = path.join(__dirname, 'pages');
 
     try {
@@ -30,6 +33,8 @@ const main = async () => {
 
     const pdfFilename = path.join(__dirname, 'Survivor 1.0.pdf');
     const pdfParser = new PDF2json();
+
+    const fsmFilename = path.join(__dirname, 'fsm.ts');
 
     pdfParser.on('pdfParser_dataReady', (pdfData: PDFData) => {
         pdfData.Pages.forEach((page: Page, pageIndex: number) => {
@@ -45,7 +50,7 @@ const main = async () => {
                 if (textIndex && textObject.y > prevY) {
                     text = '\n' + text;
                 }
-                
+
                 prevY = textObject.y;
                 return text;
             });
@@ -56,7 +61,11 @@ const main = async () => {
             pageText = pageText.replaceAll(' !', '!');
 
             fs.writeFile(path.join(__dirname, 'pages', filename), pageText);
+            fsmGenerator.addSection(pageNumber, pageText);
         });
+
+        const code = fsmGenerator.finish();
+        fs.writeFile(fsmFilename, code);
     });
 
     pdfParser.loadPDF(pdfFilename);
