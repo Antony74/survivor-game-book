@@ -1,8 +1,15 @@
 import graphviz from 'graphviz';
 
 export const createGraphGenerator = () => {
-
     const graph = graphviz.digraph('Survivor');
+
+    // Add vertices so that orphaned pages are displayed
+    for (let vertex = 1; vertex <= 77; ++vertex) {
+        graph.addNode(`${vertex}`);
+    }
+
+    // We implicitly turn from page 1 to 2.
+    graph.addEdge('1', '2');
 
     const graphGenerator = {
         addSection: (currentPage: number, text: string) => {
@@ -10,7 +17,9 @@ export const createGraphGenerator = () => {
             const subsequentPages = text.split(' ').reduce<number[]>((acc, word) => {
                 let number = parseInt(word);
 
-                if (number === 79) {number = 68}
+                if (number === 79) {
+                    number = 68;
+                }
 
                 if (number && number !== currentPage) {
                     return [...acc, number];
@@ -20,10 +29,10 @@ export const createGraphGenerator = () => {
             }, []);
 
             subsequentPages.forEach(subsequentPage => {
-                graph.addEdge(`${currentPage}`, `${subsequentPage}`)
+                graph.addEdge(`${currentPage}`, `${subsequentPage}`);
             });
         },
-        graph
+        graph,
     };
 
     return graphGenerator;
