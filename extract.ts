@@ -1,6 +1,8 @@
 import fs from 'fs/promises';
 import path from 'path';
-import { createFSMGenerator } from './FSMGenerator';
+import { createGraphGenerator } from './graphGenerator';
+import { graphviz as nodegraphviz } from 'node-graphviz';
+
 const PDF2json = require('pdf2json');
 
 interface RObject {
@@ -21,7 +23,7 @@ interface PDFData {
 }
 
 const main = async () => {
-    const fsmGenerator = createFSMGenerator();
+    const fsmGenerator = createGraphGenerator();
 
     const outputDir = path.join(__dirname, 'pages');
 
@@ -36,7 +38,7 @@ const main = async () => {
 
     const fsmFilename = path.join(__dirname, 'fsm.ts');
 
-    pdfParser.on('pdfParser_dataReady', (pdfData: PDFData) => {
+    pdfParser.on('pdfParser_dataReady', async (pdfData: PDFData) => {
         pdfData.Pages.forEach((page: Page, pageIndex: number) => {
             const pageNumber = pageIndex + 1;
             const filename = `page${pageNumber}.txt`;
@@ -64,8 +66,8 @@ const main = async () => {
             fsmGenerator.addSection(pageNumber, pageText);
         });
 
-        const code = fsmGenerator.finish();
-        fs.writeFile(fsmFilename, code);
+        const svg = await nodegraphviz.layout(fsmGenerator.graph.to_dot(), 'svg');
+        fs.writeFile('graph.svg', svg);
     });
 
     pdfParser.loadPDF(pdfFilename);
