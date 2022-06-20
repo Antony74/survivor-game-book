@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
+    "extract": "ts-node extract.ts",
+    "graph": "ts-node graph.ts",
     "handrolled": "ts-node handrolled.ts",
-    "start": "ts-node extract.ts"
+    "start": "npm run extract"
   },
   "repository": {
     "type": "git",

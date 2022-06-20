@@ -1,3 +1,5 @@
+// An example of a hand-rolled object model for directed graphs
+
 interface Vertex {
     id: string;
     dependencies?: Vertex[];

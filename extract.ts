@@ -1,7 +1,7 @@
+// Extract the pages from the pdf file
+
 import fs from 'fs/promises';
 import path from 'path';
-import { createGraphGenerator } from './graphGenerator';
-import { graphviz as nodegraphviz } from 'node-graphviz';
 
 const PDF2json = require('pdf2json');
 
@@ -23,8 +23,6 @@ interface PDFData {
 }
 
 const main = async () => {
-    const fsmGenerator = createGraphGenerator();
-
     const outputDir = path.join(__dirname, 'pages');
 
     try {
@@ -35,8 +33,6 @@ const main = async () => {
 
     const pdfFilename = path.join(__dirname, 'Survivor 1.0.pdf');
     const pdfParser = new PDF2json();
-
-    const fsmFilename = path.join(__dirname, 'fsm.ts');
 
     pdfParser.on('pdfParser_dataReady', async (pdfData: PDFData) => {
         pdfData.Pages.forEach((page: Page, pageIndex: number) => {
@@ -63,11 +59,7 @@ const main = async () => {
             pageText = pageText.replaceAll(' !', '!');
 
             fs.writeFile(path.join(__dirname, 'pages', filename), pageText);
-            fsmGenerator.addSection(pageNumber, pageText);
         });
-
-        const svg = await nodegraphviz.layout(fsmGenerator.graph.to_dot(), 'svg');
-        fs.writeFile('graph.svg', svg);
     });
 
     pdfParser.loadPDF(pdfFilename);
