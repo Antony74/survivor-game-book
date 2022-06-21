@@ -18,8 +18,10 @@
   "homepage": "https://github.com/Antony74/survivor-game-book#readme",
   "dependencies": {
     "@types/graphviz": "^0.0.34",
+    "@types/jsdom": "^16.2.14",
     "@types/node": "^17.0.42",
     "graphviz": "^0.0.9",
+    "jsdom": "^20.0.0",
     "node-graphviz": "^0.1.0",
     "pdf-lib": "^1.17.1",
     "pdf2json": "^2.0.1",

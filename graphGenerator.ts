@@ -3,9 +3,8 @@ import graphviz from 'graphviz';
 export const createGraphGenerator = () => {
     const graph = graphviz.digraph('Survivor');
 
-    // Add vertices so that orphaned pages are displayed
     for (let vertex = 1; vertex <= 77; ++vertex) {
-        graph.addNode(`${vertex}`);
+        graph.addNode(`${vertex}`, { style: 'filled', fillcolor: '#DDDDDD' });
     }
 
     // We implicitly turn from page 1 to 2.

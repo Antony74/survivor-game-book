@@ -1,8 +1,9 @@
 // Generate an svg graph-diagram showing how the pages are ordered
 
 import fs from 'fs/promises';
-import { createGraphGenerator } from './graphGenerator';
+import { JSDOM } from 'jsdom';
 import { graphviz as nodegraphviz } from 'node-graphviz';
+import { createGraphGenerator } from './graphGenerator';
 
 const main = async () => {
     const graphGenerator = createGraphGenerator();
@@ -19,7 +20,13 @@ const main = async () => {
     );
 
     const svg = await nodegraphviz.layout(graphGenerator.graph.to_dot(), 'svg');
-    fs.writeFile('html/graph.svg', svg);
+
+    const dom = new JSDOM(svg);
+
+
+//    dom.window.document.querySelector
+
+    fs.writeFile('html/graph.html', dom.window.document.body.outerHTML);
 };
 
 main();
