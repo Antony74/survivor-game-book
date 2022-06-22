@@ -47,11 +47,15 @@ const main = async () => {
                 let text = textObject.R.map((r: RObject) => decodeURIComponent(r.T)).join(' ');
                 const { x, y } = textObject;
 
-                if (textIndex && y > prevY && x > 4) {
-                    text = '\n' + text;
+                const gap = y - prevY;
+
+                if (textIndex) {
+                    if (gap > 1 || (gap > 0 && x > 4)) {
+                        text = '\n' + text;
+                    }
                 }
 
-                prevY = textObject.y;
+                prevY = y;
                 return text;
             });
             texts[0] += '\n';
