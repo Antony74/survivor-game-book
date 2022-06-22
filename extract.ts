@@ -11,6 +11,7 @@ interface RObject {
 
 interface TextObject {
     R: RObject[];
+    x: number;
     y: number;
 }
 
@@ -44,8 +45,9 @@ const main = async () => {
 
             const texts = page.Texts.map((textObject: TextObject, textIndex: number) => {
                 let text = textObject.R.map((r: RObject) => decodeURIComponent(r.T)).join(' ');
+                const { x, y } = textObject;
 
-                if (textIndex && textObject.y > prevY) {
+                if (textIndex && y > prevY && x > 4) {
                     text = '\n' + text;
                 }
 
