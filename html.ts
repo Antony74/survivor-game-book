@@ -17,7 +17,16 @@ const main = async () => {
         filenames.map(async filename => {
             const pageNumber = parseInt(filename.slice(4));
             const pageText = await fs.readFile(`pages/${filename}`, { encoding: 'utf8' });
-            fs.writeFile(`html/page${pageNumber}.html`, pageText);
+
+            const pageHtml = prettier.format(
+                pageText
+                    .split('\n')
+                    .map(line => `<p>${line}</p>`)
+                    .join(''),
+                prettierOptions,
+            );
+
+            fs.writeFile(`html/page${pageNumber}.html`, pageHtml);
             graphGenerator.addSection(pageNumber, pageText);
             return true;
         }),
@@ -29,7 +38,7 @@ const main = async () => {
 
     dom.window.document.querySelectorAll('.node').forEach(nodeElement => {
         const pageNumber = nodeElement.querySelector('title')!.textContent!;
-        const clickEventContent =`location.href='page${pageNumber}.html'`;
+        const clickEventContent = `location.href='page${pageNumber}.html'`;
         const ellipse = nodeElement.querySelector('ellipse')!;
         const text = nodeElement.querySelector('text')!;
         ellipse.setAttribute('onclick', clickEventContent);
