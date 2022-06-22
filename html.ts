@@ -21,8 +21,18 @@ const main = async () => {
             const pageHtml = prettier.format(
                 pageText
                     .split('\n')
-                    .map(line => `<p>${line}</p>`)
-                    .join(''),
+                    .map(line => {
+                        const annotatedLine = line
+                            .split(' ')
+                            .map(word => {
+                                let number = parseInt(word);
+                                return number ? `<a href="page${number}.html">${word}</a>` : word;
+                            })
+                            .join(' ');
+
+                        return `<p>${annotatedLine}</p>`;
+                    })
+                    .join('\n'),
                 prettierOptions,
             );
 
