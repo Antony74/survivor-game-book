@@ -6,6 +6,7 @@
     "extract": "ts-node extract.ts",
     "html": "ts-node html.ts",
     "handrolled": "ts-node handrolled.ts",
+    "languagetool-server": "java -cp C:\\tools\\languagetool\\languagetool-server.jar org.languagetool.server.HTTPServer --port 8081 --allow-origin",
     "serve": "http-server html",
     "start": "npm run extract"
   },
