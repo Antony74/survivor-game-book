@@ -27,7 +27,6 @@
     "http-server": "^14.1.1",
     "jsdom": "^20.0.0",
     "node-graphviz": "^0.1.0",
-    "pdf-lib": "^1.17.1",
     "pdf2json": "^2.0.1",
     "prettier": "^2.7.0",
     "ts-node": "^10.8.1",
