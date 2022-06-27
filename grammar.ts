@@ -5,11 +5,13 @@ const main = async () => {
     const filenames = await fs.readdir('pages');
 
     for (const filename of filenames) {
-        const pageText = await fs.readFile(`pages/${filename}`, { encoding: 'utf8' });
+        const text = await fs.readFile(`pages/${filename}`, { encoding: 'utf8' });
+
+       const params = new URLSearchParams({text, language: 'en-GB', enabledOnly: 'false'})
 
         const response = await fetch('http://localhost:8081/v2/check', {
             method: 'POST',
-            body: 'text=I%20can%20typing&language=en-GB&enabledOnly=false',
+            body: params.toString(),
         });
 
         if (response.status !== 200) {
