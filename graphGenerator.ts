@@ -8,7 +8,7 @@ export const createGraphGenerator = () => {
 
     const graphGenerator = {
         addSection: (currentPage: number, text: string) => {
-            const fillcolor = text.includes('(This page has not yet been checked by a native speaker)\n\n')
+            const fillcolor = text.includes('(This page has not yet been checked by a native speaker)')
                 ? '#FF00FF'
                 : '#DDDDDD';
 
