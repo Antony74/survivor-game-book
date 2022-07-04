@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
+    "capitalisation": "ts-node capitalisation",
     "extract": "ts-node extract.ts",
     "grammar": "ts-node grammar.ts",
     "html": "ts-node html.ts",
