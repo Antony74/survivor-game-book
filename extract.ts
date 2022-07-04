@@ -64,7 +64,10 @@ const main = async () => {
             pageText = pageText.replaceAll('  ', ' ');
             pageText = pageText.replaceAll(' !', '!');
 
-            fs.writeFile(path.join(__dirname, 'pages', filename), pageText);
+            fs.writeFile(
+                path.join(__dirname, 'pages', filename),
+                '(This page has not yet been checked by a native speaker)\n\n' + pageText,
+            );
         });
     });
 
