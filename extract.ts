@@ -38,7 +38,8 @@ const main = async () => {
     pdfParser.on('pdfParser_dataReady', async (pdfData: PDFData) => {
         pdfData.Pages.forEach((page: Page, pageIndex: number) => {
             const pageNumber = pageIndex + 1;
-            const filename = `page${pageNumber}.txt`;
+            const paddedPageNumber = `${pageNumber}`.padStart(2, '0');
+            const filename = `page${paddedPageNumber}.txt`;
             console.log(`Page ${pageNumber}`);
 
             let prevY = 0;
