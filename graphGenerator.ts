@@ -1,5 +1,20 @@
 import graphviz from 'graphviz';
 
+const labels: [number, number, string][] = [
+    [2, 6, 'fight'],
+    [2, 25, 'escape'],
+    [23, 14, 'escape'],
+    [25, 27, 'necromancer'],
+    [21, 17, 'lead'],
+    [55, 47, 'worker'],
+    [55, 29, 'mechanic'],
+    [39, 72, 'escape'],
+    [39, 62, 'guard'],
+    [47, 60, 'help'],
+    [47, 39, 'nothing'],
+    [66, 69, 'hostess'],
+];
+
 export const createGraphGenerator = () => {
     const graph = graphviz.digraph('Survivor');
 
@@ -30,7 +45,12 @@ export const createGraphGenerator = () => {
             }, []);
 
             subsequentPages.forEach(subsequentPage => {
-                graph.addEdge(`${currentPage}`, `${subsequentPage}`);
+                const label = labels
+                    .filter(([from, to]) => currentPage === from && subsequentPage === to)
+                    .map(([_from, _to, label]) => label)
+                    .join();
+
+                graph.addEdge(`${currentPage}`, `${subsequentPage}`, { label });
             });
         },
         graph,
