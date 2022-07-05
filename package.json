@@ -4,6 +4,7 @@
   "description": "",
   "scripts": {
     "capitalisation": "ts-node capitalisation",
+    "count-chains": "ts-node countChains.ts",
     "extract": "ts-node extract.ts",
     "grammar": "ts-node grammar.ts",
     "html": "ts-node html.ts",
