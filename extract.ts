@@ -2,6 +2,7 @@
 
 import fs from 'fs/promises';
 import path from 'path';
+import { ensureDirExists } from './ensureDirExists';
 
 const PDF2json = require('pdf2json');
 
@@ -25,12 +26,7 @@ interface PDFData {
 
 const main = async () => {
     const outputDir = path.join(__dirname, 'pages');
-
-    try {
-        await fs.stat(outputDir);
-    } catch (_e) {
-        await fs.mkdir(outputDir);
-    }
+    await ensureDirExists(outputDir);
 
     const pdfFilename = path.join(__dirname, 'Survivor 1.0.pdf');
     const pdfParser = new PDF2json();

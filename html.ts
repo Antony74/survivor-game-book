@@ -2,14 +2,19 @@
 
 import fs from 'fs/promises';
 import { JSDOM } from 'jsdom';
-import { graphviz as nodegraphviz } from 'node-graphviz';
 import prettier from 'prettier';
-import { createGraphGenerator } from './graphGenerator';
+import { graphviz as nodegraphviz } from 'node-graphviz';
+import path from 'path';
+import { createAdventureBookGraph } from './adventureBookGraph';
+import { ensureDirExists } from './ensureDirExists';
 
 const prettierOptions = { parser: 'html' };
 
 const main = async () => {
-    const graphGenerator = createGraphGenerator();
+    const outputDir = path.join(__dirname, 'html');
+    await ensureDirExists(outputDir);
+
+    const graphPromise = createAdventureBookGraph();
 
     const filenames = await fs.readdir('pages');
 
@@ -37,12 +42,13 @@ const main = async () => {
             );
 
             fs.writeFile(`html/page${pageNumber}.html`, pageHtml);
-            graphGenerator.addSection(pageNumber, pageText);
             return true;
         }),
     );
 
-    const svg = await nodegraphviz.layout(graphGenerator.graph.to_dot(), 'svg');
+    const graph = await graphPromise;
+
+    const svg = await nodegraphviz.layout(graph.to_dot(), 'svg');
 
     const dom = new JSDOM(svg);
 
