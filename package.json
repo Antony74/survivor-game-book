@@ -4,6 +4,7 @@
   "description": "",
   "scripts": {
     "capitalisation": "ts-node capitalisation",
+    "count-chains": "ts-node countChains.ts",
     "extract": "ts-node extract.ts",
     "grammar": "ts-node grammar.ts",
     "html": "ts-node html.ts",
@@ -26,6 +27,7 @@
     "@types/node": "^17.0.42",
     "@types/node-fetch": "^2.6.2",
     "@types/prettier": "^2.6.3",
+    "graph-data-structure": "^2.0.0",
     "graphviz": "^0.0.9",
     "http-server": "^14.1.1",
     "jsdom": "^20.0.0",
