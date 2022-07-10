@@ -25,7 +25,7 @@ export const createGraphGenerator = () => {
         checkedSections: 0,
         addSection: (currentPage: number, text: string) => {
             const checked = !text.includes('(This page has not yet been checked by a native speaker)');
-            const fillcolor = checked ? '#FF00FF' : '#DDDDDD';
+            const fillcolor = checked ? '#DDDDDD' : '#FF00FF';
 
             if (checked) {
                 ++graphGenerator.checkedSections;
