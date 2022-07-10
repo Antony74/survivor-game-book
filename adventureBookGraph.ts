@@ -1,6 +1,6 @@
 import fs from 'fs/promises';
 import { Graph } from 'graphviz';
-import { createGraphGenerator } from "./graphGenerator";
+import { createGraphGenerator } from './graphGenerator';
 
 export const createAdventureBookGraph = async (): Promise<Graph> => {
     const graphGenerator = createGraphGenerator();
@@ -16,6 +16,11 @@ export const createAdventureBookGraph = async (): Promise<Graph> => {
         }),
     );
 
-    return graphGenerator.graph;
-}
+    console.log(
+        `${graphGenerator.checkedSections} out of ${filenames.length} sections checked, leaving ${
+            filenames.length - graphGenerator.checkedSections
+        } still to be looked at.`,
+    );
 
+    return graphGenerator.graph;
+};
