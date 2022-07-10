@@ -22,10 +22,14 @@ export const createGraphGenerator = () => {
     graph.addEdge('1', '2');
 
     const graphGenerator = {
+        checkedSections: 0,
         addSection: (currentPage: number, text: string) => {
-            const fillcolor = text.includes('(This page has not yet been checked by a native speaker)')
-                ? '#FF00FF'
-                : '#DDDDDD';
+            const checked = !text.includes('(This page has not yet been checked by a native speaker)');
+            const fillcolor = checked ? '#FF00FF' : '#DDDDDD';
+
+            if (checked) {
+                ++graphGenerator.checkedSections;
+            }
 
             graph.addNode(`${currentPage}`, { style: 'filled', fillcolor });
 
